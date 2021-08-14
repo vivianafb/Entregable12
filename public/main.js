@@ -1,3 +1,4 @@
+
 const socket = io.connect();
 
 // Cuando arrancamos pedimos la data que hay actualmente enviando un socket
@@ -28,5 +29,5 @@ function render(data) {
 
 socket.on('messages', (data) => {
   console.log('RECIBI MENSAJE');
-  console.log(data);
+ render(data);
 });
