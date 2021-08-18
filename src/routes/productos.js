@@ -65,6 +65,11 @@ router.get('/vista', (req, res) => {
   res.render('main',{lista})
 });
 
+router.get('/inicio', (req, res) => {
+
+    res.render('main')
+  });
+
 router.get('/listar', (req, res) => {
   let array = new Productos();
   let lista = array.listar(productos);

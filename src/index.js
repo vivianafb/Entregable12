@@ -4,9 +4,15 @@ import handlebars from 'express-handlebars'
 import path from 'path';
 import * as http from 'http';
 import io from 'socket.io';
+import {initWsServer} from './services/socket';
 
 const app = express();
+const server = http.Server(app);
+
+initWsServer(server);
+
 const puerto = 8080;
+server.listen(puerto, () => console.log('Server up en puerto', puerto));
 
 const publicPath = path.resolve(__dirname, '../public');
 app.use(express.static(publicPath));
@@ -22,12 +28,7 @@ app.engine(
     extname: 'hbs',
   })
 );
-const myServer = http.Server(app);
-
-myServer.listen(puerto, () => console.log('Server up en puerto', puerto));
-
-const myWSServer = io(myServer);
-
+const myWSServer = io(server);
 const messages = [];
 
 myWSServer.on('connection',  (socket) =>{
